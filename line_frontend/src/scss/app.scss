@@ -26,7 +26,8 @@
 @import 'demo';
 
 body {
-    background-color: whitesmoke;    
+    background-color: whitesmoke;  
+    user-select: none;
 }
 .container {
     padding-bottom: 20px;

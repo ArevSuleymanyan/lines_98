@@ -46,7 +46,7 @@ export default class LinesLogic {
 
             if (!board[r2].color) {
                 board[r2].color = randomColors[i];
-                board[r2].number = -1
+                board[r2].number = -1;
                 i++;
             }
         }
@@ -137,13 +137,31 @@ export default class LinesLogic {
         return true;
     }
 
+    // showAnimation(fastestWay, callback) {
+    //     const milliseconds = 1500;
+    //     const cellDuration = milliseconds / fastestWay.length;
+    //     let index = 0;
+    //     intervalId = setInterval(function() {
+    //         draw(fastestWay[index])
+    //         index > 0 && undraw(fastestWay[index])
+    //         index ++;
+    //         if (index === fastestWay.length) {
+    //             clearInterval(intervalId)
+    //             callback();
+    //         }
+    //     }, cellDuration)
+    // }
+
     changeColorLoc(index1, index2, board) {
         if (board[index1].color && !board[index2].color) {
             this.checkStep(index1, 1, board);
             if (board[index2].number && board[index2].number > 0) {
+                // const fastestWay = findFastestRoud(board);
+                // showAnimation(fastestWay, () => {
                 board[index2].color = board[index1].color;
                 board[index2].number = -1;
                 board[index1].color = '';
+                // });
             }
         }
         for (let i = 0; i < board.length; i++) {
@@ -155,7 +173,10 @@ export default class LinesLogic {
 
     checkStep(index, num, board) {
         board[index].number = num;
-        if (index + 9 < 81 && !board[index + 9].number) {
+        if (
+            index + 9 < 81 &&
+            (!board[index + 9].number || board[index + 9].number > num)
+        ) {
             board[index + 9].number = num;
             this.checkStep(index + 9, num + 1, board);
         }

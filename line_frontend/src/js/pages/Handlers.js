@@ -20,13 +20,16 @@ export default class Handlers {
     async loginHandler(email, password) {
         if (!email || !password) {
             alert('Please provide an email and password');
+            return;
         }
-        // email validation with regex
         const user = await userService.login(email, password);
+        if(user.message){
+            alert(user.message);
+            return;            
+        }
         const { token } = user;
         localStorageService.setToken(token);
         gameModel.isLogin = true;
-
         window.location.replace('home');
     }
 

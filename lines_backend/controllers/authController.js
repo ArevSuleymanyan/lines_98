@@ -17,7 +17,6 @@ async function login(req, res) {
         });
     }
     const result = await userService.getUserByEmail(email);
-    
     if (
         !result.length ||
         !(await bcrypt.compare(password, result[0].password))
@@ -31,9 +30,8 @@ async function login(req, res) {
     });
     return res
         .status(200)
-        .json({ message: 'User logged in', data: result[0], token });
+        .json({ data: result[0], token });
 }
-
 
 async function register(req, res) {
     const { name, email, password, confirmPassword } = req.body || {};
