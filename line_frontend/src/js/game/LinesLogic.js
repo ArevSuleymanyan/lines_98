@@ -156,7 +156,7 @@ export default class LinesLogic {
         if (board[index1].color && !board[index2].color) {
             this.checkStep(index1, 1, board);
             if (board[index2].number && board[index2].number > 0) {
-                // const fastestWay = findFastestRoud(board);
+                // const fastestWay = findFastestRoud(board); 
                 // showAnimation(fastestWay, () => {
                 board[index2].color = board[index1].color;
                 board[index2].number = -1;
@@ -181,21 +181,28 @@ export default class LinesLogic {
             this.checkStep(index + 9, num + 1, board);
         }
 
-        if (index - 9 >= 0 && !board[index - 9].number) {
+        if (
+            index - 9 >= 0 &&
+            (!board[index - 9].number || board[index - 9].number > num)
+        ) {
             board[index - 9].number = num;
             this.checkStep(index - 9, num + 1, board);
         }
 
         if (
             index + 1 < 81 &&
-            !board[index + 1].number &&
+            (!board[index + 1].number || board[index + 1].number > num) &&
             (index + 1) % 9 !== 0
         ) {
             board[index + 1].number = num;
             this.checkStep(index + 1, num + 1, board);
         }
 
-        if (index - 1 >= 0 && !board[index - 1].number && index % 9 !== 0) {
+        if (
+            index - 1 >= 0 &&
+            (!board[index - 1].number || board[index - 1].number > num) &&
+            index % 9 !== 0
+        ) {
             board[index - 1].number = num;
             this.checkStep(index - 1, num + 1, board);
         }
