@@ -46,10 +46,10 @@ export default class LinesLogic {
 
             if (!board[r2].color) {
                 board[r2].color = randomColors[i];
+                board[r2].number = -1
                 i++;
             }
         }
-        console.log(randomColors);
     }
 
     checkColorsHorizontal(board, n = 3) {
@@ -75,16 +75,16 @@ export default class LinesLogic {
     }
 
     checkColorsVertical(board, n = 3) {
-        for (let i = 0; i < board.length - n*9; i++) {
+        for (let i = 0; i < board.length - (n - 1) * 9; i++) {
             if (board[i].color) {
                 let count = 0;
                 for (let j = 0; j < 9 * n; j += 9) {
-                    if(board[i].color === board[i + j].color ){
-                        count++
+                    if (board[i].color === board[i + j].color) {
+                        count++;
                     }
                 }
                 if (count === n) {
-                    for (let j = 0; j < n*9; j+=9) {
+                    for (let j = 0; j < n * 9; j += 9) {
                         board[i + j].color = '';
                         board[i + j].number = 0;
                     }
@@ -126,7 +126,6 @@ export default class LinesLogic {
                 }
             }
         }
-        
     }
 
     checkEndGame(board) {

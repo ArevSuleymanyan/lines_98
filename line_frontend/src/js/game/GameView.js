@@ -1,8 +1,10 @@
+import GsapAnimation from '../pages/GsapAnimation.js';
 import UserService from '../services/UserService.js';
 import LinesLogic from './LinesLogic.js';
 import gameModel from './models/index.js'
 const linesLogic = new LinesLogic();
 const userService = new UserService();
+const gsapAnimation = new GsapAnimation()
 export default class GameView {
     constructor() {
         this.initCell = {
@@ -14,6 +16,9 @@ export default class GameView {
 
     runGame(board, div) {
         this.createGameBord(board, div);
+
+        let cell = document.querySelectorAll('.cell');
+        gsapAnimation.gameGoardAnimation( cell)
     }
 
     createGameBord(board, div) {
@@ -55,7 +60,7 @@ export default class GameView {
 
     clickHandler(board, e) {
         let id = +e.target.id;
-        if (board[id].color && !this.initCell.color) {
+        if (board[id].color ) {   
             this.initCell.color = board[id].color;
             this.initCell.id_1 = id;
         }
@@ -95,6 +100,7 @@ export default class GameView {
             let classNames = item.classList;
             if (!board[i].color && classNames.length === 2) {
                 item.classList.remove(classNames[1]);
+                
             }
             if (board[i].color && classNames.length === 1) {
                 item.classList.add(board[i].color);
@@ -104,16 +110,20 @@ export default class GameView {
     }
 
     reloadClickHandler(board) {
+        // debugger;
         for (let i = 0; i < board.length; i++) {
+            
             let item = document.getElementById(i);
             let classNames = item.classList;
             if (classNames.length === 2) {
-                item.classList.remove(classNames[1]);
+                    item.classList.remove(classNames[1]);
+                }
+                board[i].color = '';
+                board[i].number = 0;
             }
-            (board[i].color = ''), (board[i].number = 0);
-        }
-        linesLogic.updateBoardColor(board);
-        this.viewUpdate(board);
+            linesLogic.updateBoardColor(board);
+            this.viewUpdate(board);
+            console.log(board)
     }
 
     async saveClickHandler(e, board) {

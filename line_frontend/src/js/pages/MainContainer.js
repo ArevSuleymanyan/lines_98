@@ -2,6 +2,7 @@ import Handlers from './Handlers.js';
 import LocalStorageService from '../LocalStorageService.js';
 import gameModel from '../game/models/index.js';
 import GsapAnimation from './GsapAnimation.js';
+import { wrap } from 'gsap/gsap-core';
 
 const localStorageService = new LocalStorageService();
 const handlers = new Handlers();
@@ -49,12 +50,12 @@ export default class MainContainer {
         passwordLbl.innerHTML = 'password';
         passwordLbl.classList.add('form-label', 'fst-italic');
 
-        wrapper.append(emailLbl);
-        wrapper.append(email);
-        wrapper.append(passwordLbl);
-        wrapper.append(password);
-        wrapper.append(btn);
-
+        
+        let elements = [emailLbl,email,passwordLbl,password,btn];
+        for (let i = 0; i < elements.length; i++) {
+            wrapper.append(elements[i])
+        }
+        gsapAnimation.loginBoardAnimation(elements)
         root.append(wrapper);
     }
 
@@ -105,16 +106,12 @@ export default class MainContainer {
         confirmPasswordLbl.innerHTML = 'confirm password';
         confirmPasswordLbl.classList.add('form-label', 'fst-italic');
 
-        wrapper.append(nameLbl);
-        wrapper.append(name);
-        wrapper.append(emailLbl);
-        wrapper.append(email);
-        wrapper.append(passwordLbl);
-        wrapper.append(password);
-        wrapper.append(confirmPasswordLbl);
-        wrapper.append(confirmPassword);
-        wrapper.append(btn);
-
+        
+        let elements = [nameLbl,name,emailLbl,email,passwordLbl,password,confirmPasswordLbl,confirmPassword,btn]
+        for (let i = 0; i < elements.length; i++) {
+            wrapper.append(elements[i])
+        }
+        gsapAnimation.loginBoardAnimation(elements)
         root.append(wrapper);
     }
 
