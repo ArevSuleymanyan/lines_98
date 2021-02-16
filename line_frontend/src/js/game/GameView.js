@@ -59,6 +59,7 @@ export default class GameView {
     }
 
     clickHandler(board, e) {
+        
         let id = +e.target.id;
         if (board[id].color ) {   
             this.initCell.color = board[id].color;
@@ -71,16 +72,16 @@ export default class GameView {
                 this.initCell.id_2,
                 board
             );
-            if (!board[this.initCell.id_2].color) {
+            // if (!board[this.initCell.id_2].color) {
+            //     this.initCell.color = '';
+            //     this.initCell.id_1 = '';
+            //     this.initCell.id_2 = '';
+            //     return;
+            // } else {
                 this.initCell.color = '';
                 this.initCell.id_1 = '';
                 this.initCell.id_2 = '';
-                return;
-            } else {
-                this.initCell.color = '';
-                this.initCell.id_1 = '';
-                this.initCell.id_2 = '';
-                linesLogic.updateBoardColor(board);
+                // linesLogic.updateBoardColor(board);
 
                 this.viewUpdate(board);
                 linesLogic.checkColorsHorizontal(board);
@@ -90,7 +91,7 @@ export default class GameView {
                 if(linesLogic.checkEndGame(board)){
                     alert('Game Over');
                 }
-            }
+            // }
         }
     }
 

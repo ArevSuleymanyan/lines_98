@@ -12,7 +12,7 @@ export default class GsapAnimation{
     
     loginBoardAnimation(array){
         let tl = gsap.timeline()
-        tl.from(array, {opacity:0, stagger:0.2, x:600})
+        tl.from(array, {opacity:0, stagger:0.03, x:600})
     }
     gameGoardAnimation( array ){
         let tl = gsap.timeline()

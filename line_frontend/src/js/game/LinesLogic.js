@@ -136,32 +136,47 @@ export default class LinesLogic {
         }
         return true;
     }
+    showAnimation(color, fastestWay, callback) {
+        // const milliseconds = 1500;
+        // const cellDuration = milliseconds / fastestWay.length;
+        const cellDuration = 160;
+        let index = 0;
+        let intervalId = setInterval(function () {
+            let item = document.getElementById(fastestWay[index]);
 
-    // showAnimation(fastestWay, callback) {
-    //     const milliseconds = 1500;
-    //     const cellDuration = milliseconds / fastestWay.length;
-    //     let index = 0;
-    //     intervalId = setInterval(function() {
-    //         draw(fastestWay[index])
-    //         index > 0 && undraw(fastestWay[index])
-    //         index ++;
-    //         if (index === fastestWay.length) {
-    //             clearInterval(intervalId)
-    //             callback();
-    //         }
-    //     }, cellDuration)
-    // }
+            item.classList.add(color);
+            if (index > 0) {
+                let item = document.getElementById(fastestWay[index - 1]);
+                item.classList.remove(color);
+            }
+            index++;
+            if (index === fastestWay.length) {
+                clearInterval(intervalId);
+                callback();
+            }
+        }, cellDuration);
+    }
+    
 
     changeColorLoc(index1, index2, board) {
         if (board[index1].color && !board[index2].color) {
             this.checkStep(index1, 1, board);
             if (board[index2].number && board[index2].number > 0) {
-                // const fastestWay = findFastestRoud(board); 
-                // showAnimation(fastestWay, () => {
-                board[index2].color = board[index1].color;
-                board[index2].number = -1;
-                board[index1].color = '';
-                // });
+                let way = [index2];
+                const fastestWay = this.findFastestRoud(
+                    board,
+                    index2,
+                    board[index2].number,
+                    way
+                );
+                fastestWay.reverse();
+                let color = board[index1].color;
+                this.showAnimation(color, fastestWay, () => {
+                    board[index2].color = board[index1].color;
+                    board[index2].number = -1;
+                    board[index1].color = '';
+                    this.updateBoardColor(board)
+                });
             }
         }
         for (let i = 0; i < board.length; i++) {
@@ -169,6 +184,33 @@ export default class LinesLogic {
                 board[i].number = 0;
             }
         }
+    }
+    findFastestRoud(board, index, count, way) {
+        if (index + 9 < 81 && count - board[index + 9].number === 1) {
+            way.push(index + 9);
+            this.findFastestRoud(board, index + 9, count - 1, way);
+        } else if (index - 9 >= 0 && count - board[index - 9].number === 1) {
+            way.push(index - 9);
+
+            this.findFastestRoud(board, index - 9, count - 1, way);
+        } else if (
+            index + 1 < 81 &&
+            (index + 1) % 9 !== 0 &&
+            count - board[index + 1].number === 1
+        ) {
+            way.push(index + 1);
+
+            this.findFastestRoud(board, index + 1, count - 1, way);
+        } else if (
+            index - 1 >= 0 &&
+            index % 9 !== 0 &&
+            count - board[index - 1].number === 1
+        ) {
+            way.push(index - 1);
+
+            this.findFastestRoud(board, index - 1, count - 1, way);
+        }
+        return way;
     }
 
     checkStep(index, num, board) {
