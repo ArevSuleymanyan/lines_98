@@ -1,7 +1,7 @@
 import UserService from '../services/UserService.js';
 import GameView from '../game/GameView.js';
 import LocalStorageService from '../LocalStorageService.js';
-import gameModel from '../game/models/index.js'
+import gameModel from '../game/models/index.js';
 
 const gameView = new GameView();
 const userService = new UserService();
@@ -23,9 +23,9 @@ export default class Handlers {
             return;
         }
         const user = await userService.login(email, password);
-        if(user.message){
+        if (user.message) {
             alert(user.message);
-            return;            
+            return;
         }
         const { token } = user;
         localStorageService.setToken(token);
@@ -39,7 +39,8 @@ export default class Handlers {
             return;
         }
 
-        let regName = /^[a-zA-Z]+[a-zA-Z0-9._-]{2,}/;
+        // let regName = /^[a-zA-Z]+[a-zA-Z0-9._-]{2,}/;
+        let regName = /^[a-zA-Z]+[a-zA-Z]{2,15}$/;
         if (!regName.test(name)) {
             alert(
                 `Length is more than 3 characters.

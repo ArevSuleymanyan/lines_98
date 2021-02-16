@@ -65,6 +65,10 @@ function renderPage(name) {
     if (!gameModel.isLogin && ['play', 'home'].indexOf(name) != -1) {
         name = 'login';
     }
+    if(gameModel.isLogin && ['login', 'register'].indexOf(name) != -1){
+        name = 'home';
+    }
+
     switch (name) {
         case 'homeguest':
             mainContainer.homeGuestContainer();
