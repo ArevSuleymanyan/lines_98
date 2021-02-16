@@ -16,7 +16,6 @@ export default class GameView {
 
     runGame(board, div) {
         this.createGameBord(board, div);
-
         let cell = document.querySelectorAll('.cell');
         gsapAnimation.gameGoardAnimation( cell)
     }
@@ -59,7 +58,7 @@ export default class GameView {
     }
 
     clickHandler(board, e) {
-        
+        // debugger;
         let id = +e.target.id;
         if (board[id].color ) {   
             this.initCell.color = board[id].color;
@@ -84,10 +83,10 @@ export default class GameView {
                 // linesLogic.updateBoardColor(board);
 
                 this.viewUpdate(board);
-                linesLogic.checkColorsHorizontal(board);
-                linesLogic.checkColorsVertical(board);
-                linesLogic.checkColorsDiagonal(board);
-                this.viewUpdate(board);
+                // linesLogic.checkColorsHorizontal(board);
+                // linesLogic.checkColorsVertical(board);
+                // linesLogic.checkColorsDiagonal(board);
+                // this.viewUpdate(board);
                 if(linesLogic.checkEndGame(board)){
                     alert('Game Over');
                 }
@@ -111,7 +110,6 @@ export default class GameView {
     }
 
     reloadClickHandler(board) {
-        // debugger;
         for (let i = 0; i < board.length; i++) {
             
             let item = document.getElementById(i);

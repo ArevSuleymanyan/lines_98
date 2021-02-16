@@ -38,6 +38,7 @@ export default class LinesLogic {
     }
 
     updateBoardColor(board) {
+        
         let randomColors = this.getRandomColors();
 
         let i = 0;
@@ -179,6 +180,9 @@ export default class LinesLogic {
                 });
             }
         }
+        // this.checkColorsHorizontal(board);
+        // this.checkColorsVertical(board);
+        // this.checkColorsDiagonal(board);
         for (let i = 0; i < board.length; i++) {
             if (!board[i].color) {
                 board[i].number = 0;
