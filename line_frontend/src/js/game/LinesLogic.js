@@ -183,6 +183,21 @@ export default class LinesLogic {
                 board[index2].number = -1;
                 board[index1].color = '';
                 board[index1].number = 0;
+                this.updateBoardColor(board);
+                this.checkColorsHorizontal(board);
+                this.checkColorsVertical(board);
+                this.checkColorsDiagonal(board);
+                for (let i = 0; i < board.length; i++) {
+                    let item = document.getElementById(i);
+                    let classNames = item.classList;
+                    if (!board[i].color && classNames.length === 2) {
+                        item.classList.remove(classNames[1]);
+                    }
+                    if (board[i].color && classNames.length === 1) {
+                        item.classList.add(board[i].color);
+                        board[i].number = -1;
+                    }
+                }
             });
 
             for (let i = 0; i < board.length; i++) {
@@ -190,7 +205,6 @@ export default class LinesLogic {
                     board[i].number = 0;
                 }
             }
-            this.updateBoardColor(board);
         }
     }
 

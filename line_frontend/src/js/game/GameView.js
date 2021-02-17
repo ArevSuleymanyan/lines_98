@@ -71,7 +71,7 @@ export default class GameView {
                 this.initCell.color,
                 board
             );
-            this.viewUpdate(board)
+            // this.viewUpdate(board)
             
             
             if (!board[this.initCell.id_2].color) {
