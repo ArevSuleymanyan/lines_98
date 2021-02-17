@@ -46,7 +46,7 @@ export default class LinesLogic {
 
             if (!board[r2].color) {
                 board[r2].color = randomColors[i];
-                board[r2].number = -1
+                board[r2].number = -1;
                 i++;
             }
         }
@@ -137,7 +137,7 @@ export default class LinesLogic {
         return true;
     }
 
-    changeColorLoc(index1, index2, board) {
+    moveTheColor(index1, index2, board) {
         if (board[index1].color && !board[index2].color) {
             this.checkStep(index1, 1, board);
             if (board[index2].number && board[index2].number > 0) {

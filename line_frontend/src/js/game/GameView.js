@@ -1,10 +1,10 @@
 import GsapAnimation from '../pages/GsapAnimation.js';
 import UserService from '../services/UserService.js';
 import LinesLogic from './LinesLogic.js';
-import gameModel from './models/index.js'
+import gameModel from './models/index.js';
 const linesLogic = new LinesLogic();
 const userService = new UserService();
-const gsapAnimation = new GsapAnimation()
+const gsapAnimation = new GsapAnimation();
 export default class GameView {
     constructor() {
         this.initCell = {
@@ -17,7 +17,7 @@ export default class GameView {
     runGame(board, div) {
         this.createGameBord(board, div);
         let cell = document.querySelectorAll('.cell');
-        gsapAnimation.gameGoardAnimation( cell)
+        gsapAnimation.gameGoardAnimation(cell);
     }
 
     createGameBord(board, div) {
@@ -57,43 +57,43 @@ export default class GameView {
         this.viewUpdate(board);
     }
 
-    clickHandler(board, e) {
-        let id = +e.target.id;
-        if (board[id].color ) {   
-            this.initCell.color = board[id].color;
+     clickHandler(board, e) {
+        let id = Number(e.target.id);
+        if (board[id].color) {
             this.initCell.id_1 = id;
+            this.initCell.color = board[id].color;
         }
         if (!board[id].color && this.initCell.color) {
-            
             this.initCell.id_2 = id;
-            linesLogic.changeColorLoc(
+             linesLogic.moveTheColor(
                 this.initCell.id_1,
                 this.initCell.id_2,
+                this.initCell.color,
                 board
             );
+            this.viewUpdate(board)
+            
+            
+            if (!board[this.initCell.id_2].color) {
                 this.initCell.color = '';
                 this.initCell.id_1 = '';
                 this.initCell.id_2 = '';
-
-                this.viewUpdate(board);
-                linesLogic.checkColorsHorizontal(board);
-                linesLogic.checkColorsVertical(board);
-                linesLogic.checkColorsDiagonal(board);
-                this.viewUpdate(board);
-
-                if(linesLogic.checkEndGame(board)){
-                    alert('Game Over');
-                }
+                return;
+            }
+            if (linesLogic.checkEndGame(board)) {
+                alert('Game Over');
+            }
         }
+        
     }
 
     viewUpdate(board) {
+        console.log('viewUpdate')
         for (let i = 0; i < board.length; i++) {
             let item = document.getElementById(i);
             let classNames = item.classList;
             if (!board[i].color && classNames.length === 2) {
                 item.classList.remove(classNames[1]);
-                
             }
             if (board[i].color && classNames.length === 1) {
                 item.classList.add(board[i].color);
@@ -104,22 +104,20 @@ export default class GameView {
 
     reloadClickHandler(board) {
         for (let i = 0; i < board.length; i++) {
-            
             let item = document.getElementById(i);
             let classNames = item.classList;
             if (classNames.length === 2) {
-                    item.classList.remove(classNames[1]);
-                }
-                board[i].color = '';
-                board[i].number = 0;
+                item.classList.remove(classNames[1]);
             }
-            linesLogic.updateBoardColor(board);
-            this.viewUpdate(board);
-            console.log(board)
+            board[i].color = '';
+            board[i].number = 0;
+        }
+        linesLogic.updateBoardColor(board);
+        this.viewUpdate(board);
+        console.log(board);
     }
 
     async saveClickHandler(e, board) {
-        
         let id = gameModel.user.id;
         let res = await userService.addGame(id, board);
         alert(res.message);

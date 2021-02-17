@@ -38,21 +38,27 @@ export default class LinesLogic {
     }
 
     updateBoardColor(board) {
+        console.log('updateBoardColor');
         let randomColors = this.getRandomColors();
+        let emptyCells = [];
+        for (let j = 0; j < board.length; j++) {
+            if (!board[j].color) {
+                emptyCells.push(j);
+            }
+        }
 
-        let i = 0;
-        while (i < 3) {
-            let r2 = Math.floor(Math.random() * board.length);
-
-            if (!board[r2].color) {
-                board[r2].color = randomColors[i];
-                board[r2].number = -1;
+        for (let i = 0; i < randomColors.length; ) {
+            let r = Math.floor(Math.random() * emptyCells.length);
+            if (!board[emptyCells[r]].color) {
+                board[emptyCells[r]].color = randomColors[i];
+                board[emptyCells[r]].number = -1;
                 i++;
             }
         }
     }
 
     checkColorsHorizontal(board, n = 3) {
+        console.log('checkColorsHorizontal');
         for (let i = 0; i < board.length - n; i++) {
             if (board[i].color) {
                 let count = 0;
@@ -75,6 +81,7 @@ export default class LinesLogic {
     }
 
     checkColorsVertical(board, n = 3) {
+        console.log('checkColorsVertical');
         for (let i = 0; i < board.length - (n - 1) * 9; i++) {
             if (board[i].color) {
                 let count = 0;
@@ -94,6 +101,7 @@ export default class LinesLogic {
     }
 
     checkColorsDiagonal(board, n = 3) {
+        console.log('checkColorsDiagonal');
         for (let i = 0; i < board.length - (n - 1) * 10; i++) {
             if (board[i].color) {
                 let count = 0;
@@ -137,13 +145,13 @@ export default class LinesLogic {
         return true;
     }
     showAnimation(color, fastestWay, callback) {
+        console.log('showAnimation');
         // const milliseconds = 1500;
         // const cellDuration = milliseconds / fastestWay.length;
         const cellDuration = 160;
         let index = 0;
         let intervalId = setInterval(function () {
             let item = document.getElementById(fastestWay[index]);
-
             item.classList.add(color);
             if (index > 0) {
                 let item = document.getElementById(fastestWay[index - 1]);
@@ -156,40 +164,36 @@ export default class LinesLogic {
             }
         }, cellDuration);
     }
-    
 
-    changeColorLoc(index1, index2, board) {
-        if (board[index1].color && !board[index2].color) {
-            this.checkStep(index1, 1, board);
-            if (board[index2].number && board[index2].number > 0) {
-                let way = [index2];
-                const fastestWay = this.findFastestRoud(
-                    board,
-                    index2,
-                    board[index2].number,
-                    way
-                );
-                fastestWay.reverse();
-                let color = board[index1].color;
-                this.showAnimation(color, fastestWay, () => {
-                    board[index2].color = board[index1].color;
-                    board[index2].number = -1;
-                    board[index1].color = '';
-                });
+    moveTheColor(index1, index2, color, board) {
+        console.log('moveTheColor');
+        this.checkStep(index1, 1, board);
+        if (board[index2].number > 0) {
+            let way = [index2];
+            const fastestWay = this.findFastestRoud(
+                board,
+                index2,
+                board[index2].number,
+                way
+            );
+            fastestWay.reverse();
+
+            this.showAnimation(color, fastestWay, () => {
+                board[index2].color = board[index1].color;
+                board[index2].number = -1;
+                board[index1].color = '';
+                board[index1].number = 0;
+            });
+
+            for (let i = 0; i < board.length; i++) {
+                if (!board[i].color) {
+                    board[i].number = 0;
+                }
             }
-        }
-        this.updateBoardColor(board)
-        console.log(board)
-        
-        for (let i = 0; i < board.length; i++) {
-            if (!board[i].color ) {
-                board[i].number = 0;
-            }
-            if(board[i].color && board[i].number===1){
-                board[i].number= -1
-            }
+            this.updateBoardColor(board);
         }
     }
+
     findFastestRoud(board, index, count, way) {
         if (index + 9 < 81 && count - board[index + 9].number === 1) {
             way.push(index + 9);

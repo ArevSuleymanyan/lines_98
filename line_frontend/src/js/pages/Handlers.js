@@ -39,7 +39,6 @@ export default class Handlers {
             return;
         }
 
-        // let regName = /^[a-zA-Z]+[a-zA-Z0-9._-]{2,}/;
         let regName = /^[a-zA-Z]+[a-zA-Z]{2,15}$/;
         if (!regName.test(name)) {
             alert(
