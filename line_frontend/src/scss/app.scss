@@ -124,3 +124,24 @@ body {
 .r-s {
     width: 240px;
 }
+
+.level{
+    display: block;
+}
+.box1{
+    text-align: center;
+    font-size: 26px;
+    font-weight: bolder;
+    color: black;
+}
+
+.box2{
+    display: flex;
+    // flex-direction: row;
+    justify-content: center;
+}
+.levelBtn{
+    margin: 5px 10px;
+    font-weight: bolder;
+    padding: 4px 20px;
+}

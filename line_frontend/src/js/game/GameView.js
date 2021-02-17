@@ -15,12 +15,34 @@ export default class GameView {
     }
 
     runGame(board, div) {
-        this.createGameBord(board, div);
+        this.createLevelBoard(div);
+        this.createGameBoard(board, div);
         let cell = document.querySelectorAll('.cell');
         gsapAnimation.gameGoardAnimation(cell);
     }
 
-    createGameBord(board, div) {
+    createLevelBoard(div) {
+        let levelBoard = document.createElement('div');
+        levelBoard.classList.add('level');
+        let box1 = document.createElement('div');
+        box1.classList.add('box1');
+        box1.innerHTML = 'LEVEL';
+        let box2 = document.createElement('div');
+        box2.classList.add('box2');
+        for (let i = 0; i < 3; i++) {
+            let btn = document.createElement('button');
+            btn.classList.add('btn', 'btn-dark', 'levelBtn');
+            btn.addEventListener('click', ()=> this.levelChangeHandler(i+1))
+            btn.innerHTML = i + 1;
+            box2.append(btn);
+        }
+        levelBoard.append(box1, box2);
+        div.append(levelBoard);
+        let levelBtn = document.querySelectorAll('.levelBtn')
+        gsapAnimation.btnAnimation(levelBtn)
+    }
+
+    createGameBoard(board, div, lvl = 3) {
         let n = 0;
         for (let i = 0; i < 9; i++) {
             let line = document.createElement('div');
@@ -57,7 +79,7 @@ export default class GameView {
         this.viewUpdate(board);
     }
 
-     clickHandler(board, e) {
+    clickHandler(board, e) {
         let id = Number(e.target.id);
         if (board[id].color) {
             this.initCell.id_1 = id;
@@ -65,15 +87,14 @@ export default class GameView {
         }
         if (!board[id].color && this.initCell.color) {
             this.initCell.id_2 = id;
-             linesLogic.moveTheColor(
+            linesLogic.moveTheColor(
                 this.initCell.id_1,
                 this.initCell.id_2,
                 this.initCell.color,
                 board
             );
             // this.viewUpdate(board)
-            
-            
+
             if (!board[this.initCell.id_2].color) {
                 this.initCell.color = '';
                 this.initCell.id_1 = '';
@@ -84,11 +105,13 @@ export default class GameView {
                 alert('Game Over');
             }
         }
-        
+    }
+    levelChangeHandler(n = 3){
+        console.log(n)
     }
 
     viewUpdate(board) {
-        console.log('viewUpdate')
+        console.log('viewUpdate');
         for (let i = 0; i < board.length; i++) {
             let item = document.getElementById(i);
             let classNames = item.classList;
