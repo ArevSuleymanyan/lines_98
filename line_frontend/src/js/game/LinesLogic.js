@@ -38,7 +38,6 @@ export default class LinesLogic {
     }
 
     updateBoardColor(board) {
-        
         let randomColors = this.getRandomColors();
 
         let i = 0;
@@ -176,16 +175,18 @@ export default class LinesLogic {
                     board[index2].color = board[index1].color;
                     board[index2].number = -1;
                     board[index1].color = '';
-                    this.updateBoardColor(board)
                 });
             }
         }
-        // this.checkColorsHorizontal(board);
-        // this.checkColorsVertical(board);
-        // this.checkColorsDiagonal(board);
+        this.updateBoardColor(board)
+        console.log(board)
+        
         for (let i = 0; i < board.length; i++) {
-            if (!board[i].color) {
+            if (!board[i].color ) {
                 board[i].number = 0;
+            }
+            if(board[i].color && board[i].number===1){
+                board[i].number= -1
             }
         }
     }

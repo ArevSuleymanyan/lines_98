@@ -58,39 +58,32 @@ export default class GameView {
     }
 
     clickHandler(board, e) {
-        // debugger;
         let id = +e.target.id;
         if (board[id].color ) {   
             this.initCell.color = board[id].color;
             this.initCell.id_1 = id;
         }
         if (!board[id].color && this.initCell.color) {
+            
             this.initCell.id_2 = id;
             linesLogic.changeColorLoc(
                 this.initCell.id_1,
                 this.initCell.id_2,
                 board
             );
-            // if (!board[this.initCell.id_2].color) {
-            //     this.initCell.color = '';
-            //     this.initCell.id_1 = '';
-            //     this.initCell.id_2 = '';
-            //     return;
-            // } else {
                 this.initCell.color = '';
                 this.initCell.id_1 = '';
                 this.initCell.id_2 = '';
-                // linesLogic.updateBoardColor(board);
 
                 this.viewUpdate(board);
-                // linesLogic.checkColorsHorizontal(board);
-                // linesLogic.checkColorsVertical(board);
-                // linesLogic.checkColorsDiagonal(board);
-                // this.viewUpdate(board);
+                linesLogic.checkColorsHorizontal(board);
+                linesLogic.checkColorsVertical(board);
+                linesLogic.checkColorsDiagonal(board);
+                this.viewUpdate(board);
+
                 if(linesLogic.checkEndGame(board)){
                     alert('Game Over');
                 }
-            // }
         }
     }
 
