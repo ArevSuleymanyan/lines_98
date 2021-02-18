@@ -38,7 +38,6 @@ export default class LinesLogic {
     }
 
     updateBoardColor(board) {
-        console.log('updateBoardColor');
         let randomColors = this.getRandomColors();
         let emptyCells = [];
         for (let j = 0; j < board.length; j++) {
@@ -58,7 +57,6 @@ export default class LinesLogic {
     }
 
     checkColorsHorizontal(board, n = 3) {
-        console.log('checkColorsHorizontal');
         for (let i = 0; i < board.length - n; i++) {
             if (board[i].color) {
                 let count = 0;
@@ -81,7 +79,6 @@ export default class LinesLogic {
     }
 
     checkColorsVertical(board, n = 3) {
-        console.log('checkColorsVertical');
         for (let i = 0; i < board.length - (n - 1) * 9; i++) {
             if (board[i].color) {
                 let count = 0;
@@ -101,7 +98,6 @@ export default class LinesLogic {
     }
 
     checkColorsDiagonal(board, n = 3) {
-        console.log('checkColorsDiagonal');
         for (let i = 0; i < board.length - (n - 1) * 10; i++) {
             if (board[i].color) {
                 let count = 0;
@@ -145,7 +141,6 @@ export default class LinesLogic {
         return true;
     }
     showAnimation(color, fastestWay, callback) {
-        console.log('showAnimation');
         // const milliseconds = 1500;
         // const cellDuration = milliseconds / fastestWay.length;
         const cellDuration = 160;
@@ -165,8 +160,7 @@ export default class LinesLogic {
         }, cellDuration);
     }
 
-    moveTheColor(index1, index2, color, board) {
-        console.log('moveTheColor');
+    moveTheColor(index1, index2, color, board,) {
         this.checkStep(index1, 1, board);
         if (board[index2].number > 0) {
             let way = [index2];
@@ -184,9 +178,9 @@ export default class LinesLogic {
                 board[index1].color = '';
                 board[index1].number = 0;
                 this.updateBoardColor(board);
-                this.checkColorsHorizontal(board);
-                this.checkColorsVertical(board);
-                this.checkColorsDiagonal(board);
+                this.checkColorsHorizontal(board,);
+                this.checkColorsVertical(board,);
+                this.checkColorsDiagonal(board,);
                 for (let i = 0; i < board.length; i++) {
                     let item = document.getElementById(i);
                     let classNames = item.classList;

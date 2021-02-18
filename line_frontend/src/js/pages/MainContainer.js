@@ -129,6 +129,7 @@ export default class MainContainer {
         this.clearRoot();
         handlers.playGameHandler();
     }
+    
 
     logoutContainer() {
         this.clearRoot();
