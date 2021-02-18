@@ -6,7 +6,7 @@ export default class LinesLogic {
 
     resetData() {
         this.board = [];
-        for (let i = 0; i < 81; i++) {
+        for (let i = 0; i < 81; i+=1) {
             this.board.push({
                 color: '',
                 number: 0,
@@ -21,7 +21,7 @@ export default class LinesLogic {
             let r2 = Math.floor(Math.random() * board.length);
             if (!board[r2].color) {
                 board[r2].color = this.colors[r1];
-                i++;
+                i+=1;
             }
         }
     }
@@ -32,7 +32,7 @@ export default class LinesLogic {
         while (i < 3) {
             let r1 = Math.floor(Math.random() * this.colors.length);
             randomColors.push(this.colors[r1]);
-            i++;
+            i+=1;
         }
         return randomColors;
     }
@@ -47,25 +47,25 @@ export default class LinesLogic {
             if (!board[r2].color) {
                 board[r2].color = randomColors[i];
                 board[r2].number = -1;
-                i++;
+                i+=1;
             }
         }
     }
 
     checkColorsHorizontal(board, n = 3) {
-        for (let i = 0; i < board.length - n; i++) {
+        for (let i = 0; i < board.length - n; i+=1) {
             if (board[i].color) {
                 let count = 0;
-                for (let j = 0; j < n; j++) {
+                for (let j = 0; j < n; j+=1) {
                     if (
                         board[i].color === board[i + j].color &&
                         parseInt(i / 9) === parseInt((i + j) / 9)
                     ) {
-                        count++;
+                        count+=1;
                     }
                 }
                 if (count === n) {
-                    for (let j = 0; j < n; j++) {
+                    for (let j = 0; j < n; j+=1) {
                         board[i + j].color = '';
                         board[i + j].number = 0;
                     }
@@ -75,12 +75,12 @@ export default class LinesLogic {
     }
 
     checkColorsVertical(board, n = 3) {
-        for (let i = 0; i <= board.length - (n - 1) * 9; i++) {
+        for (let i = 0; i <= board.length - (n - 1) * 9; i+=1) {
             if (board[i].color) {
                 let count = 0;
                 for (let j = 0; j < 9 * n; j += 9) {
                     if (board[i].color === board[i + j].color) {
-                        count++;
+                        count+=1;
                     }
                 }
                 if (count === n) {
@@ -94,12 +94,12 @@ export default class LinesLogic {
     }
 
     checkColorsDiagonal(board, n = 3) {
-        for (let i = 0; i < board.length - (n - 1) * 10; i++) {
+        for (let i = 0; i < board.length - (n - 1) * 10; i+=1) {
             if (board[i].color) {
                 let count = 0;
                 for (let j = 0; j < n * 10; j += 10) {
                     if (board[i].color === board[i + j].color) {
-                        count++;
+                        count+=1;
                     }
                 }
                 if (count === n) {
@@ -110,12 +110,12 @@ export default class LinesLogic {
                 }
             }
         }
-        for (let i = 0; i < board.length - (n - 1) * 8; i++) {
+        for (let i = 0; i < board.length - (n - 1) * 8; i+=1) {
             if (board[i].color) {
                 let count = 0;
                 for (let j = 0; j < n * 8; j += 8) {
                     if (board[i].color === board[i + j].color) {
-                        count++;
+                        count+=1;
                     }
                 }
                 if (count === n) {
@@ -129,7 +129,7 @@ export default class LinesLogic {
     }
 
     checkEndGame(board) {
-        for (let i = 0; i < board.length; i++) {
+        for (let i = 0; i < board.length; i+=1) {
             if (!board[i].color) {
                 return false;
             }
@@ -146,7 +146,7 @@ export default class LinesLogic {
                 board[index1].color = '';
             }
         }
-        for (let i = 0; i < board.length; i++) {
+        for (let i = 0; i < board.length; i+=1) {
             if (!board[i].color) {
                 board[i].number = 0;
             }

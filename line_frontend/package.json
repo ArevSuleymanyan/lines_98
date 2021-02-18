@@ -79,11 +79,12 @@
     "dev": "webpack serve --config configuration/webpack.dev.config.js --mode=development",
     "production": "webpack --config configuration/webpack.prod.config.js --mode=production",
     "lint:sass": "sass-lint -v -q",
-    "lint:js": "eslint --ext .js src/js/",
+    "lint:js": "eslint --fix --ext .js src/js/",
     "stats": "webpack --config configuration/webpack.prod.config.js --mode=production --json > dist/stats.json && webpack-bundle-analyzer dist/stats.json"
   },
   "target": "web",
   "dependencies": {
+    "babel-eslint": "^10.1.0",
     "gsap": "^3.6.0"
   }
 }

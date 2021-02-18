@@ -1,14 +1,13 @@
 export default class LocalStorageService {
-    getToken(token){
-        return localStorage.getItem(token)
-    }
+  static getToken(token) {
+    return localStorage.getItem(token);
+  }
 
-    setToken(token){
-        localStorage.setItem('token', token)
-    }
+  static setToken(token) {
+    localStorage.setItem('token', token);
+  }
 
-    removeToken(token){
-        localStorage.removeItem(token)
-    }
-
+  static removeToken(token) {
+    localStorage.removeItem(token);
+  }
 }

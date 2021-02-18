@@ -3,16 +3,13 @@ import Router from './pages/Router';
 import UserService from './services/UserService.js';
 import MainContainer from './pages/MainContainer.js';
 import LocalStorageService from './LocalStorageService.js';
-import gameModel from './game/models/index.js'
+import gameModel from './game/models/index.js';
 
-
-const router = new Router();
 const userService = new UserService();
 const mainContainer = new MainContainer();
-const localStorageService = new LocalStorageService();
 
 function navigate(name) {
-    router.navigate(name);
+    Router.navigate(name);
     renderPage(name);
 }
 const homeGuest = () => navigate('homeguest');
@@ -21,7 +18,6 @@ const register = () => navigate('register');
 const loginHome = () => navigate('home');
 const play = () => navigate('play');
 const logout = () => navigate('logout');
-
 
 const header = [
     { name: 'HomeGuest', handler: homeGuest, isLogin: false },
@@ -33,7 +29,7 @@ const header = [
 ];
 
 async function checkIsLogined() {
-    const token = localStorageService.getToken('token');
+    const token = LocalStorageService.getToken('token');
     let page = window.location.href.split('/');
     page = page[page.length - 1];
     if (!token) {
@@ -45,27 +41,27 @@ async function checkIsLogined() {
         const user = await userService.getUserInfo();
         if (user && user.id) {
             gameModel.user = user;
-            router.loginScreen(header);
+            Router.loginScreen(header);
             gameModel.isLogin = true;
             renderPage(page);
             return;
         }
         gameModel.isLogin = false;
-        router.guestScreen(header);
+        Router.guestScreen(header);
         renderPage(page);
     } catch (error) {
-        router.guestScreen(header);
+        Router.guestScreen(header);
         gameModel.isLogin = false;
         renderPage(page);
-        console.log(error.message);
+        alert(error.message);
     }
 }
 
 function renderPage(name) {
-    if (!gameModel.isLogin && ['play', 'home'].indexOf(name) != -1) {
+    if (!gameModel.isLogin && ['play', 'home'].indexOf(name) !== -1) {
         name = 'login';
     }
-    if(gameModel.isLogin && ['login', 'register'].indexOf(name) != -1){
+    if (gameModel.isLogin && ['login', 'register'].indexOf(name) !== -1) {
         name = 'home';
     }
 

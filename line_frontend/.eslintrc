@@ -5,6 +5,7 @@
     "jasmine": true,
     "jquery": true
   },
+  "parser": "babel-eslint",
   "rules": {
     "no-use-before-define": 0,
     "func-names": 0,
@@ -20,11 +21,17 @@
     "jsx-a11y/href-no-hash": "off",
     "jsx-a11y/anchor-is-valid": ["warn", { "aspects": ["invalidHref"] }],
     "import/no-unresolved": 0,
-    "import/extensions": 0
+    "import/extensions": 0,
+    "no-param-reassign":0,
+    "no-alert": 0,
+    "import/no-named-as-default": 0
   },
   "globals": {
     "browser": false,
     "window": true,
-    "document": true
+    "document": true,
+    "localStorage":true,
+    "fetch": true,
+    "alert": true
   }
 }
