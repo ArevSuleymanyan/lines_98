@@ -8,7 +8,7 @@ const userService = new UserService();
 const root = document.getElementById('root');
 
 export default class Handlers {
-  async playGameHandler() {
+  static async playGameHandler() {
     const token = LocalStorageService.getToken('token');
     userService.setConfig({ token });
     const game = await userService.getGameInfo();
@@ -16,7 +16,7 @@ export default class Handlers {
     gameView.runGame(game, root);
   }
 
-  async loginHandler(email, password) {
+  static async loginHandler(email, password) {
     if (!email || !password) {
       alert('Please provide an email and password');
       return;
@@ -32,7 +32,7 @@ export default class Handlers {
     window.location.replace('home');
   }
 
-  async registerHandler(name, email, password, confirmPassword) {
+  static async registerHandler(name, email, password, confirmPassword) {
     if (!name || !email || !password || !confirmPassword) {
       alert('Fill in all the fields');
       return;

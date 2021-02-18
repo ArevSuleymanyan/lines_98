@@ -3,10 +3,9 @@ import LocalStorageService from '../LocalStorageService.js';
 import gameModel from '../game/models/index.js';
 import GsapAnimation from './GsapAnimation.js';
 
-const handlers = new Handlers();
 export default class MainContainer {
   homeGuestContainer() {
-    this.clearRoot();
+    this.constructor.clearRoot();
     const root = document.getElementById('root');
     const p = document.createElement('p');
     p.innerHTML = 'Please log in...';
@@ -16,7 +15,7 @@ export default class MainContainer {
   }
 
   loginContainer() {
-    this.clearRoot();
+    this.constructor.clearRoot();
     const root = document.getElementById('root');
     const wrapper = document.createElement('div');
     wrapper.classList.add('wrapper');
@@ -30,13 +29,13 @@ export default class MainContainer {
     password.setAttribute('type', 'password');
     password.addEventListener('keypress', (e) => {
       if (e.keyCode === 13) {
-        handlers.loginHandler(email.value, password.value);
+        Handlers.loginHandler(email.value, password.value);
       }
     });
     const btn = document.createElement('button');
     btn.classList.add('btn', 'btn-secondary', 'btn-lg');
     btn.innerHTML = 'ENTER';
-    btn.addEventListener('click', () => handlers.loginHandler(email.value, password.value));
+    btn.addEventListener('click', () => Handlers.loginHandler(email.value, password.value));
 
     const emailLbl = document.createElement('label');
     emailLbl.innerHTML = 'email';
@@ -54,7 +53,7 @@ export default class MainContainer {
   }
 
   registerContainer() {
-    this.clearRoot();
+    this.constructor.clearRoot();
     const root = document.getElementById('root');
     const wrapper = document.createElement('div');
     wrapper.classList.add('wrapper');
@@ -77,7 +76,7 @@ export default class MainContainer {
 
     const btn = document.createElement('button');
     btn.classList.add('btn', 'btn-secondary', 'btn-lg');
-    btn.addEventListener('click', () => handlers.registerHandler(
+    btn.addEventListener('click', () => Handlers.registerHandler(
       name.value,
       email.value,
       password.value,
@@ -117,7 +116,7 @@ export default class MainContainer {
   }
 
   homeContainer() {
-    this.clearRoot();
+    this.constructor.clearRoot();
     const { user } = gameModel;
     const root = document.getElementById('root');
     const p = document.createElement('p');
@@ -127,12 +126,12 @@ export default class MainContainer {
   }
 
   playContainer() {
-    this.clearRoot();
-    handlers.playGameHandler();
+    this.constructor.clearRoot();
+    Handlers.playGameHandler();
   }
 
   logoutContainer() {
-    this.clearRoot();
+    this.constructor.clearRoot();
     gameModel.user = null;
     gameModel.game = [];
     gameModel.isLogin = false;
@@ -140,7 +139,7 @@ export default class MainContainer {
     window.location.replace('homeguest');
   }
 
-  clearRoot() {
+  static clearRoot() {
     const root = document.getElementById('root');
     while (root.firstElementChild) {
       root.removeChild(root.lastElementChild);

@@ -46,14 +46,14 @@ export default class GameView {
 
     const save = document.createElement('button');
     save.innerHTML = 'Save';
-    save.addEventListener('click', () => this.saveClickHandler(board));
+    save.addEventListener('click', () => this.constructor.saveClickHandler(board));
     save.classList.add('btn', 'btn-success', 'r-s');
 
     btnWrap.append(reload, save);
     div.append(btnWrap);
 
     linesLogic.runGame(board);
-    this.viewUpdate(board);
+    this.constructor.viewUpdate(board);
   }
 
   clickHandler(board, e) {
@@ -77,13 +77,13 @@ export default class GameView {
         this.initCell.id_2 = '';
         return;
       }
-      if (linesLogic.checkEndGame(board)) {
+      if (LinesLogic.checkEndGame(board)) {
         alert('Game Over');
       }
     }
   }
 
-  viewUpdate(board) {
+  static viewUpdate(board) {
     for (let i = 0; i < board.length; i += 1) {
       const item = document.getElementById(i);
       const classNames = item.classList;
@@ -108,10 +108,10 @@ export default class GameView {
       board[i].number = 0;
     }
     linesLogic.updateBoardColor(board);
-    this.viewUpdate(board);
+    this.constructor.viewUpdate(board);
   }
 
-  async saveClickHandler(board) {
+  static async saveClickHandler(board) {
     const { id } = gameModel.user;
     const res = await userService.addGame(id, board);
     alert(res.message);

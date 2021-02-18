@@ -56,7 +56,7 @@ export default class LinesLogic {
     }
   }
 
-  checkColorsHorizontal(board, n = 3) {
+  static checkColorsHorizontal(board, n = 3) {
     for (let i = 0; i < board.length - n; i += 1) {
       if (board[i].color) {
         let count = 0;
@@ -78,7 +78,7 @@ export default class LinesLogic {
     }
   }
 
-  checkColorsVertical(board, n = 3) {
+  static checkColorsVertical(board, n = 3) {
     for (let i = 0; i < board.length - (n - 1) * 9; i += 1) {
       if (board[i].color) {
         let count = 0;
@@ -97,7 +97,7 @@ export default class LinesLogic {
     }
   }
 
-  checkColorsDiagonal(board, n = 3) {
+  static checkColorsDiagonal(board, n = 3) {
     for (let i = 0; i < board.length - (n - 1) * 10; i += 1) {
       if (board[i].color) {
         let count = 0;
@@ -132,7 +132,7 @@ export default class LinesLogic {
     }
   }
 
-  checkEndGame(board) {
+  static checkEndGame(board) {
     for (let i = 0; i < board.length; i += 1) {
       if (!board[i].color) {
         return false;
@@ -141,7 +141,7 @@ export default class LinesLogic {
     return true;
   }
 
-  showAnimation(color, fastestWay, callback) {
+  static showAnimation(color, fastestWay, callback) {
     // const milliseconds = 1500;
     // const cellDuration = milliseconds / fastestWay.length;
     const cellDuration = 160;
@@ -174,15 +174,15 @@ export default class LinesLogic {
       );
       fastestWay.reverse();
 
-      this.showAnimation(color, fastestWay, () => {
+      this.constructor.showAnimation(color, fastestWay, () => {
         board[index2].color = board[index1].color;
         board[index2].number = -1;
         board[index1].color = '';
         board[index1].number = 0;
         this.updateBoardColor(board);
-        this.checkColorsHorizontal(board);
-        this.checkColorsVertical(board);
-        this.checkColorsDiagonal(board);
+        this.constructor.checkColorsHorizontal(board);
+        this.constructor.checkColorsVertical(board);
+        this.constructor.checkColorsDiagonal(board);
         for (let i = 0; i < board.length; i += 1) {
           const item = document.getElementById(i);
           const classNames = item.classList;
